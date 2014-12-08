@@ -1,0 +1,27 @@
+{% extends 'index.html' %}
+        <!-- <form id="login_form" method="post" action=""> -->
+        <!--     {% csrf_token %} -->
+        <!--     Username: <input type="text" name="username" value="" size="50" /> -->
+        <!--     <br /> -->
+        <!--     Password: <input type="password" name="password" value="" size="50" /> -->
+        <!--     <br /> -->
+
+        <!--     <input type="submit" value="submit" /> -->
+        <!-- </form> -->
+{% block section %}
+        <form id="login_form" method="post" class="pure-form pure-form-stacked" style="margin-left: 30%; position: relative; top:-250px">{% csrf_token %}
+            <fieldset>
+                <legend>SIGN IN</legend>
+
+                <input type="text" name="username" value="" size="50"
+                placeholder="Usuario">
+                <input type="password" name="password" value="" size="50" placeholder="Password">
+                
+                <label for="remember">
+                    <input id="remember" type="checkbox"> Remember me 
+                </label>
+                
+                <button type="submit" class="pure-button pure-button-primary">Sign in</button>
+            </fieldset>
+        </form>
+{% endblock %}

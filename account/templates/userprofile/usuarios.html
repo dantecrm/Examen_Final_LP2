@@ -1,0 +1,17 @@
+{% extends "index.html" %}
+{% block titulo %}{{titulo}}{% endblock %}
+{% block section %}
+<div style="color: #000; position:relative; top:-250px; margin-left:12cm">
+    <ul>
+        {% for usuario in usuarios %}
+        <li> {{usuario.username}} <em>{{usuario.email}}</em></li>
+        {% endfor %}
+    </ul>
+    <div class="form-group"><a href="/register"><button type="submit"
+                class="pure-button pure-button-primary">Agregar Nuevo Usuario</button></a>
+    </div>
+    <div style="position:relative; top:12px;"><a href="/"><button type="submit"
+                style="background-color: #7fff00; color:#fff"class="pure-button">Retornar</button></a>
+    </div>
+</div>
+{% endblock %}

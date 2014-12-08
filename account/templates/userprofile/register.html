@@ -1,0 +1,59 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+{% if registered %}
+<style scoped>
+    .button-success,
+    .button-error,
+    .button-warning,
+    .button-secondary {
+        color: white;
+        border-radius: 4px;
+        text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    .button-success {
+        background: rgb(28, 184, 65); /* this is a green */
+    }
+
+    .button-error {
+        background: rgb(202, 60, 60); /* this is a maroon */
+    }
+
+    .button-warning {
+        background: rgb(223, 117, 20); /* this is an orange */
+    }
+
+    .button-secondary {
+        background: rgb(66, 184, 221); /* this is a light blue */
+    }
+</style>
+<form class="pure-form pure-form-aligned">{% csrf_token %}
+    Estimado usuario: <strong>Ha creado un nuevo usuario</strong>
+    <a href="/userprofile/list" class="button-success pure-button">Return to the homepage.</a><br />
+    <div class="pure-g">
+        <div class="pure-u-1-3"><p>Ya puedes empezar</p></div>
+    </div>
+</form>
+{% else %}
+<p style="margin-left:5cm"> Account: <strong>REGISTRATE AQUÍ!</strong></p><br/>
+<form class="pure-form pure-form-aligned" enctype="multipart/form-data" style="margin-left:5cm" id="user_form" method="post">{% csrf_token %}
+    <fieldset>
+        <div class="pure-control-group">
+            {{ user_form.as_p }}
+        </div>
+        <div class="pure-control-group">
+            {{ profile_form.as_p }}
+        </div>
+        <div class="pure-controls">
+            <label for="cb" class="pure-checkbox">
+                <input id="cb" type="checkbox">&nbsp Aceptar términos y condiciones</label>
+            <button type="submit" name="submit" value="Register" class="pure-button pure-button-primary">Submit</button>
+            <a href="/" class="pure-button" style="color:white; background-color: #00FF0D">Retornar</a>
+        </div>
+    </fieldset>
+</form>
+{% endif %}
+
+{% endblock %}

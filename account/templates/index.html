@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en" class="no-js">
+	<header>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Administrador de Usuarios</title>
+        
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+        <meta name="description" content="Responsive Retina-Friendly Menu with different, size-dependent layouts" />
+        <meta name="keywords" content="responsive menu, retina-ready, icon font, media queries, css3, transition, mobile" />
+        <link rel="stylesheet" href="{% static 'css/default.css' %}" />
+        <link rel="stylesheet" href="{% static 'css/component.css' %}" />
+        <!-- <link rel="stylesheet" href="{% static 'css/demo.css' %}"> -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}">
+        <script src="{% static 'js/modernizr.custom.js' %}"></script>
+        {% block extracss %}{% endblock %}
+	</head>
+    <body>
+        <div class="container">	
+			<header>
+                <img src="{% static 'images/django-logo.png' %}" width="180px" height="70px" style="float:left" />
+                <h1>Menu de Administración de Usuarios <span>con diferentes opciones</span></h1>
+            </header>
+            {% block body %}
+			<div class="main clearfix">
+				<nav id="menu" class="nav">					
+                    <ul>
+                        {% if user.is_authenticated %}
+						<li>
+							<a href="/">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-home"></i>
+								</span>
+								<span>Home</span>
+							</a>
+						</li>
+						<li>
+                            <a href="{% url 'user_profile_list' %}">
+								<span class="icon">
+									<i aria-hidden="true"
+                                        class="icon-users"></i>
+								</span>
+								<span>Profile</span>
+							</a>
+                        </li>
+						<li>
+                            <a href="{% url 'register' %}">
+								<span class="icon"> 
+									<i aria-hidden="true" class="icon-settings"></i>
+								</span>
+								<span>Registrar a Usuarios</span>
+							</a>
+                        </li>
+						<li>
+                            <a href="{% url 'usuarios' %}">
+								<span class="icon">
+									<i aria-hidden="true"
+                                        class="icon-users2"></i>
+								</span>
+								<span>Usuarios</span>
+							</a>
+                        </li>
+						<li>
+                            <a href="{% url 'logout' %}">
+								<span class="icon">
+									<i aria-hidden="true"
+                                        class="icon-logout-all"></i>
+								</span>
+								<span>Cerrar</span>
+							</a>
+                        </li>
+                        {% else %}
+						<li>
+                            <a href="{% url 'login' %}">
+								<span class="icon">
+									<i aria-hidden="true" class="icon-user"></i>
+								</span>
+								<span>Login</span>
+							</a>
+						</li>
+						<li>
+                            <a href="{% url 'register' %}">
+								<span class="icon"> 
+									<i aria-hidden="true" class="icon-settings"></i>
+								</span>
+								<span>Sign In</span>
+							</a>
+                        </li>
+                        {% endif %}
+					</ul>
+                </nav>
+                <div>
+                    {% block dante %}{% endblock %}
+                </div>
+			</div>
+            {% endblock %}
+        </div><!-- /container -->
+        <section>
+            {% block section %}{% endblock %}
+        </section>
+		<script>
+			//  The function to change the class
+			var changeClass = function (r,className1,className2) {
+				var regex = new RegExp("(?:^|\\s+)" + className1 + "(?:\\s+|$)");
+				if( regex.test(r.className) ) {
+					r.className = r.className.replace(regex,' '+className2+' ');
+			    }
+			    else{
+					r.className = r.className.replace(new RegExp("(?:^|\\s+)" + className2 + "(?:\\s+|$)"),' '+className1+' ');
+			    }
+			    return r.className;
+			};	
+
+			//  Creating our button in JS for smaller screens
+			var menuElements = document.getElementById('menu');
+			menuElements.insertAdjacentHTML('afterBegin','<button type="button" id="menutoggle" class="navtoogle" aria-hidden="true"><i aria-hidden="true" class="icon-menu"> </i> Menu</button>');
+
+			//  Toggle the class on click to show / hide the menu
+			document.getElementById('menutoggle').onclick = function() {
+				changeClass(this, 'navtoogle active', 'navtoogle');
+			}
+
+			// http://tympanus.net/codrops/2013/05/08/responsive-retina-ready-menu/comment-page-2/#comment-438918
+			document.onclick = function(e) {
+				var mobileButton = document.getElementById('menutoggle'),
+					buttonStyle =  mobileButton.currentStyle ? mobileButton.currentStyle.display : getComputedStyle(mobileButton, null).display;
+
+				if(buttonStyle === 'block' && e.target !== mobileButton && new RegExp(' ' + 'active' + ' ').test(' ' + mobileButton.className + ' ')) {
+					changeClass(mobileButton, 'navtoogle active', 'navtoogle');
+				}
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+
+{% block section %}
+ <style scoped>
+
+        .button-success,
+        .button-error,
+        .button-warning,
+        .button-secondary {
+            color: white;
+            border-radius: 4px;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+        }
+
+        .button-success {
+            background: rgb(28, 184, 65); /* this is a green */
+        }
+
+        .button-error {
+            background: rgb(202, 60, 60); /* this is a maroon */
+        }
+
+        .button-warning {
+            background: rgb(223, 117, 20); /* this is an orange */
+        }
+
+        .button-secondary {
+            background: rgb(66, 184, 221); /* this is a light blue */
+        }
+
+    </style>
+<!-- <div class="panel panel-default"> -->
+<!--   <div class="panel-heading">Lista de Usuarios Registrados</div> -->
+  <table class="pure-table" style="margin-left:15cm; position:relative; top:-300px">
+      <thead>
+          <tr>
+              <th>Título</th> 
+              <th>Imágen</th>
+              <th>Acción</th> 
+          </tr> 
+      </thead>
+      <tbody>
+          {% for profile in userprofile_list %}
+          <tr>
+              <td>
+                  <a href="{{userprofile.get_absolute_url}}">{{profile}}</a>
+              </td> 
+              <td>
+                  <img src="{{MEDIA_URL}}{{profile.picture}}" style="width:150px">
+              </td> 
+              <td style="color: #000">{% if perms.userprofile.change_profil %} 
+                  <button type="button" class="button-secondary pure-button"><a href="{% url 'user_profile_update' profile.pk %}"style="color: #fff">Update</a></button>{% endif %} 
+                  {% if perms.userprofile.delete_profil %} 
+                  <button type="button" class="button-warning pure-button"><a href="{% url 'user_profile_delete' profile.pk %}">Delete</a></button>{% endif %}
+              </td>
+          </tr>
+          {% endfor %}
+      </tbody>
+  </table>
+<!-- </div> -->
+{% endblock %}

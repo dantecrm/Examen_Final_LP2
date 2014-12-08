@@ -1,0 +1,38 @@
+{% extends 'index.html' %}
+{% load url from future %}
+{% block body %}
+<table class="pure-table" style="margin-left:5cm">{% csrf_token %}
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Usuario</th>
+            <th>Teléfono</th>
+            <th>Provincia</th>
+            <th>Distrito</th>
+            <th>Departamento</th>
+            <th>Zona Horaria</th>
+            <th>Imagen</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr>
+            <td>{{userprofile.pk}}</td>
+            <td>{{userprofile.user}}</td>
+            <td>{{userprofile.telefono}}</td>
+            <td>{{userprofile.provincia}}</td>
+            <td>{{userprofile.distrito}}</td>
+            <td>{{userprofile.departamento}}</td>
+            <td>{{userprofile.zona_horaria}}</td>
+            <td>{{userprofile.picture}}</td>
+    </tbody>
+</table>     
+{% if perms.userprofile.change_profil %}
+<a href="{% url 'user_profile_update' userprofile.pk %}"class="pure-button
+    pure-button-primary" style="position:relative; top:12px; margin-left:10cm">Update</a>{% endif %}
+{% if perms.userprofile.delete_profil %}
+<a href="{% url 'user_profile_delete' userprofile.pk %}"class="pure-button
+    pure-button-primary" style="position:relative; top:12px; margin-left:0cm">Delete</a>{% endif %}
+<a href="/"  style="position:relative; top:12px;
+    margin-right:4cm"class="pure-button pure-button-primary">Retornar</a>
+{% endblock %}
