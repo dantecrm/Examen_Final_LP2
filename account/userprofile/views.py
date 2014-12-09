@@ -15,6 +15,8 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.contrib.auth import login, authenticate, logout
+from django.db.models import signals
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 # @method_decorator(permission_required('profil.list_profil'))
 def Usuarios(request):
@@ -22,16 +24,36 @@ def Usuarios(request):
     titulo = "Página de usuarios registrados"
     return render_to_response('userprofile/usuarios.html', {'usuarios':usuarios, 'titulo':titulo},
                               context_instance=RequestContext(request))
+
+class UserFormUpdate(UpdateView):
+    template_name = 'userprofile/user_update.html'
+    model = User
+    form_class = UserCreationForm
+    @method_decorator(permission_required('userprofile.change_profil'))
+    def dispatch(self, *args, **kwargs):
+        return super(UserFormUpdate, self).dispatch(*args, **kwargs)
+    def get_success_url(self):
+        return reverse('usuarios')
+
+class UserFormDelete(DeleteView):
+    template_name = 'userprofile/user_confirm_delete.html'
+    model = User
+    @method_decorator(permission_required('userprofile.delete_profil'))
+    def dispatch(self, *args, **kwargs):
+        return super(UserFormDelete, self).dispatch(*args, **kwargs)
+    def get_success_url(self):
+        return reverse('usuarios')
+
 def register(request):
     context = RequestContext(request)
     registered = False
 
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
+        user_form = UserCreationForm(request.POST)
         profile_form = UserProfileForm(request.POST, request.FILES)
         if user_form.is_valid() and profile_form.is_valid():
             user = user_form.save()
-            user.set_password(user.password)
+            # user.set_password(user.password)
             user.save()
 
             profile = profile_form.save(commit=False)
@@ -42,7 +64,7 @@ def register(request):
         else:
             print user_form.errors, profile_form.errors
     else:
-        user_form = UserForm()
+        user_form = UserCreationForm()
         profile_form = UserProfileForm()
     return render_to_response(
             'userprofile/register.html',

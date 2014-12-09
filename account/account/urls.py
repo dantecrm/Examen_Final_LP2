@@ -2,7 +2,7 @@ from django.conf.urls import patterns, include, url
 from django.conf.urls.static import static
 from django.conf import settings
 from django.views.generic import TemplateView
-from userprofile.views import UserProfileList, UserProfileDetail, UserProfileUpdate, UserProfileDelete
+from userprofile.views import UserFormUpdate, UserFormDelete, UserProfileList, UserProfileDetail, UserProfileUpdate, UserProfileDelete
 from userprofile import views
 from django.contrib import admin
 
@@ -19,6 +19,8 @@ urlpatterns = patterns('',
     # url(r'^userprofile/create/$', UserProfileCreate.as_view(), name='user_profile_create'),
     url(r'^userprofile/update(?P<pk>\d+)$', UserProfileUpdate.as_view(), name='user_profile_update'),
     url(r'^userprofile/delete(?P<pk>\d+)$', UserProfileDelete.as_view(), name='user_profile_delete'),
+    url(r'^user/update(?P<pk>\d+)$', UserFormUpdate.as_view(), name='user_update'),
+    url(r'^user/delete(?P<pk>\d+)$', UserFormDelete.as_view(), name='user_delete'),
     url(r'^register/$', views.register, name='register'),
     url(r'^login/$', views.user_login, name='login'),
     url(r'^logout/$', views.Cerrar, name='logout'),

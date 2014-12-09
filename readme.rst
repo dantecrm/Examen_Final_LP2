@@ -26,3 +26,6 @@ Luego instalamos Pure::
 
 Terminado eso ya podemos correr el proyecto.
 
+Usuario: admin
+Password: 123
+

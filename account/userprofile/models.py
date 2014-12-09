@@ -17,7 +17,7 @@ class UserProfile(models.Model):
         permissions = (
             ('list_profil', 'Puedes listar'),
             ('view_profil', 'Puedes visualizar'),
-            ('add_profil', 'Can agregar'),
+            ('add_profil', 'Puede agregar'),
             ('change_profil', 'Puedes editar'),
             ('delete_profil', 'Puedes eliminar'),
         )

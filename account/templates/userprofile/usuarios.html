@@ -9,15 +9,13 @@
         <ol style="list-style-type: decimal-leading-zero;">
         {% for usuario in usuarios %}
         <li> 
-            {{usuario.username}} <em>{{usuario.email}}</em> 
-            <a href="#" class="pure-button" style="background-color: #FFD700; color:#fff">UPDATE</a>
-            <a href="#" class="pure-button" style="background-color:#DAA520;color:#fff">DELETE</a>
+            {{usuario.username}} <em>{{usuario.email}}</em>  
         </li>
         {% endfor %}
         </ol>
     </ul>
-    <a href="/register" class="button" style="margin-left:2cm"><span>Agregar Nuevo Usuario</span></a>
-    <div class="button01">
+    <a href="/register" class="button" style="position:relative; top:1px"><span>Agregar Nuevo Usuario</span></a>
+    <div class="button01" style="position:relative; margin-left:-11cm">
     <a href="/" >Retornar</a>
     </div>
 </div>
